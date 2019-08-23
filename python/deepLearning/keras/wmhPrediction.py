@@ -102,8 +102,6 @@ labelFieldData = pd.read_excel(label.xlsx).astype('str')
 imageShape = (x, y, z)
 seed = 33
 
-# concat_nifti_files(flairImagePath, t1ImagePath, wmhImagePath)
-
 trainData, valData = train_test_split(labelFieldData[['id', 'avg']],
                                       train_size=0.9,
                                       random_state=seed,
