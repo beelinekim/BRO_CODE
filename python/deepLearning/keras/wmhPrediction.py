@@ -1,4 +1,4 @@
-import numpy as np
+﻿import numpy as np
 import nibabel as nib
 from posixpath import join
 from tensorflow.keras import models, optimizers, Input, Sequential, Model, utils, activations
@@ -123,10 +123,8 @@ validGenerator = DataGenerator(pathList=valData,
                                shuffle=True
                                )
 
-inputImageShape = (200, 28, 200, 3)
-inputFieldShape = (583,)
+inputImageShape = imageShape
 imageInput = Input(shape=inputImageShape, name='input_image')
-# fieldInput = Input(shape=inputFieldShape, name='input_field')
 
 conv1 = Conv3D(16, 7, 2, 'same', activation='relu', name='image_conv1')(imageInput)
 conv2 = Conv3D(32, 3, 2, 'same', activation='relu', name='image_conv2')(conv1)
@@ -134,13 +132,9 @@ conv3 = Conv3D(64, 3, 2, 'same', activation='relu', name='image_conv3')(conv2)
 conv4 = Conv3D(32, 3, 2, 'same', activation='relu', name='image_conv4')(conv3)
 conv5 = Conv3D(16, 3, 2, 'same', activation='relu', name='image_conv5')(conv4)
 
-# globalAveragePooling = GlobalAveragePooling3D(name='image_global_avg_pooling')(conv4)
 flatten = Flatten(name='flatten')(conv5)
 dense1 = Dense(200, 'relu', name='dense1')(flatten)
-# dropout1 = Dropout(0.5)(dense1)
-# cc = concatenate([globalAveragePooling, dense1], name='concatenate')
 dense2 = Dense(50, 'relu', name='dense2')(dense1)
-# dropout2 = Dropout(0.5)(dense2)
 dense3 = Dense(10, 'relu', name='dense3')(dense2)
 dense4 = Dense(4, 'softmax', name='dense4')(dense3)
 
